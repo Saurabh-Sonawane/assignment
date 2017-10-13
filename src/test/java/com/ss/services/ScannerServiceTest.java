@@ -27,7 +27,22 @@ public class ScannerServiceTest {
 
         //Then
         assertEquals(2, scannerService.getUrlList().size());
-        assertEquals("https://google.com", scannerService.getUrlList().get(0));
+        assertEquals("https://google.com", scannerService.getUrlList().get(0).getUrl());
+    }
+
+    @Test
+    public void verifyErrorMessageGetsPopulatedForInvalidUrl() throws Exception {
+        //Given
+        String input = "abc://test.com";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        //When
+        scannerService.readAndProcessInput();
+
+        //Then
+        assertEquals(1, scannerService.getUrlList().size());
+        assertEquals("abc://test.com", scannerService.getUrlList().get(0).getUrl());
+        assertEquals("Invalid Url", scannerService.getUrlList().get(0).getError());
     }
 
 }
