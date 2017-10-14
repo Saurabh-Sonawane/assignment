@@ -1,12 +1,12 @@
 package com.ss.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class UrlResponse {
     private String url;
     private int statusCode;
     private long contentLength;
-    private LocalDateTime date;
+    private Date date;
     private String error;
 
 
@@ -34,11 +34,11 @@ public class UrlResponse {
         this.contentLength = contentLength;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

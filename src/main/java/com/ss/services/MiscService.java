@@ -1,5 +1,6 @@
 package com.ss.services;
 
+import com.ss.client.RestClient;
 import com.ss.model.UrlResponse;
 import org.apache.commons.validator.routines.UrlValidator;
 
@@ -7,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ScannerService {
+public class MiscService {
 
     private List<UrlResponse> urlList;
     private UrlValidator urlValidator = new UrlValidator();
+    private RestClient restClient = new RestClient();
 
     public void readAndProcessInput() {
         Scanner scanner = new Scanner(System.in);
@@ -23,11 +25,11 @@ public class ScannerService {
         }
     }
 
-    public void processUrl(String url) {
+    private void processUrl(String url) {
         UrlResponse urlResponse = new UrlResponse();
         urlResponse.setUrl(url);
         if(urlValidator.isValid(url)) {
-
+            urlResponse = restClient.fetchUrlContent(url);
         } else {
             urlResponse.setError("Invalid Url");
         }
