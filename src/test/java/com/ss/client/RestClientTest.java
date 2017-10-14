@@ -37,8 +37,8 @@ public class RestClientTest {
 
         //Then
         assertEquals(url , response.getUrl());
-        assertEquals(10000 , response.getContentLength());
-        assertEquals(200 , response.getStatusCode());
+        assertEquals(10000 , response.getContentLength().longValue());
+        assertEquals(200 , response.getStatusCode().longValue());
         assertTrue(response.getDate() != null);
     }
 
@@ -54,8 +54,8 @@ public class RestClientTest {
 
         //Then
         assertEquals(url , response.getUrl());
-        assertEquals(10000 , response.getContentLength());
-        assertEquals(400 , response.getStatusCode());
+        assertEquals(10000 , response.getContentLength().longValue());
+        assertEquals(400 , response.getStatusCode().longValue());
         assertTrue(response.getDate() != null);
     }
 
@@ -71,8 +71,8 @@ public class RestClientTest {
 
         //Then
         assertEquals(url , response.getUrl());
-        assertEquals(10000 , response.getContentLength());
-        assertEquals(500 , response.getStatusCode());
+        assertEquals(10000 , response.getContentLength().longValue());
+        assertEquals(500 , response.getStatusCode().longValue());
         assertTrue(response.getDate() != null);
     }
 
