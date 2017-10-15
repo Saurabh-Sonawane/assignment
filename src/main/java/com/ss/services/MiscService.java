@@ -1,17 +1,18 @@
 package com.ss.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.client.RestClient;
 import com.ss.model.UrlResponse;
 import org.apache.commons.validator.routines.UrlValidator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class MiscService {
 
     private List<UrlResponse> urlList;
+    private HashMap<String, Long> urlResponseStatistics = new HashMap<>();
     private UrlValidator urlValidator = new UrlValidator();
     private RestClient restClient = new RestClient();
 
@@ -30,24 +31,29 @@ public class MiscService {
         urlResponse.setUrl(url);
         if(urlValidator.isValid(url)) {
             urlResponse = restClient.fetchUrlContent(url);
+            processUrlStatistics(urlResponse);
         } else {
             urlResponse.setError("Invalid Url");
         }
         urlList.add(urlResponse);
     }
 
-    public String generateReportInJson() {
-        String report=null;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            report = mapper.writeValueAsString(urlList);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void processUrlStatistics(UrlResponse urlResponse) {
+        String key = urlResponse.getStatusCode().toString();
+        Long value = urlResponseStatistics.get(key);
+        if(value != null) {
+            urlResponseStatistics.put(key, value + 1);
+        } else {
+            urlResponseStatistics.put(key, 1L);
         }
-        return report;
     }
 
     public List<UrlResponse> getUrlList() {
         return urlList;
     }
+
+    public HashMap<String, Long> getUrlResponseStatistics() {
+        return urlResponseStatistics;
+    }
+
 }
