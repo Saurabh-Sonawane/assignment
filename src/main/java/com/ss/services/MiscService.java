@@ -6,7 +6,6 @@ import com.ss.model.UrlResponse;
 import org.apache.commons.validator.routines.UrlValidator;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,9 +18,8 @@ public class MiscService {
     public void readAndProcessInput() {
         Scanner scanner = new Scanner(System.in);
         String url = "";
-        System.out.println("Please enter each URL on new line");
+        System.out.println("Please enter each URL on new line : ");
         urlList = new ArrayList<>();
-
         while( scanner.hasNextLine() && (url = scanner.nextLine()) != null && url.length() > 0 ) {
             processUrl(url);
         }
@@ -43,7 +41,6 @@ public class MiscService {
         try {
             ObjectMapper mapper = new ObjectMapper();
             report = mapper.writeValueAsString(urlList);
-            System.out.println(new Date().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
