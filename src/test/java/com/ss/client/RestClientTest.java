@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertEquals;
@@ -43,36 +44,22 @@ public class RestClientTest {
     }
 
     @Test
-    public void verifyFetchUrlContentReturns400BadRequestAsResponse() throws Exception {
+    public void verifyFetchUrlContentReturnsException() throws Exception {
 
         //Given
         String url = "https://google.com";
-        Mockito.when(restTemplate.getForEntity(Matchers.eq(url), Matchers.eq(String.class))).thenReturn(getDummyResponse(10000, 1507987295605L, HttpStatus.BAD_REQUEST));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentLength(1234);
+        headers.setDate(1507987295605L);
+        Mockito.when(restTemplate.getForEntity(Matchers.eq(url), Matchers.eq(String.class))).thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "Not found", headers, null, null));
 
         //When
         UrlResponse response = restClient.fetchUrlContent(url);
 
         //Then
         assertEquals(url , response.getUrl());
-        assertEquals(10000 , response.getContentLength().longValue());
-        assertEquals(400 , response.getStatusCode().longValue());
-        assertTrue(response.getDate() != null);
-    }
-
-    @Test
-    public void verifyFetchUrlContentReturns500InternalServerErrorAsResponse() throws Exception {
-
-        //Given
-        String url = "https://google.com";
-        Mockito.when(restTemplate.getForEntity(Matchers.eq(url), Matchers.eq(String.class))).thenReturn(getDummyResponse(10000, 1507987295605L, HttpStatus.INTERNAL_SERVER_ERROR));
-
-        //When
-        UrlResponse response = restClient.fetchUrlContent(url);
-
-        //Then
-        assertEquals(url , response.getUrl());
-        assertEquals(10000 , response.getContentLength().longValue());
-        assertEquals(500 , response.getStatusCode().longValue());
+        assertEquals(1234 , response.getContentLength().longValue());
+        assertEquals(404 , response.getStatusCode().longValue());
         assertTrue(response.getDate() != null);
     }
 

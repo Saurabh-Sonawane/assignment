@@ -90,7 +90,7 @@ public class MiscServiceTest {
         urlResponse.setUrl(url);
         urlResponse.setStatusCode(200);
         urlResponse.setContentLength(new Long(10000));
-        urlResponse.setDate(new Date());
+        urlResponse.setDate(new Date(1507987295605L));
         return urlResponse;
     }
 
