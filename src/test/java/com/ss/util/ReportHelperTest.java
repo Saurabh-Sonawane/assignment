@@ -16,7 +16,7 @@ public class ReportHelperTest {
     private ReportHelper reportHelper = new ReportHelper();
 
     @Test
-    public void verifyGenerateUrlResponseJsonReport() throws Exception {
+    public void verifyResponseJsonReport() throws Exception {
         //Given
         List<UrlResponse> list = new ArrayList<>();
         list.add(getDummyUrlResponse("https://google.com", false));
@@ -31,7 +31,7 @@ public class ReportHelperTest {
     }
 
     @Test
-    public void verifyGenerateResponseStatisticsJsonReport() throws Exception {
+    public void verifyResponseStatisticsJsonReport() throws Exception {
         //Given
         HashMap<String, Long> map = new HashMap<>();
         map.put("200",3L);

@@ -30,7 +30,6 @@ public class ReportHelper {
                 list.add(new ResponseStatistics(Integer.parseInt(stringIntegerEntry.getKey()), stringIntegerEntry.getValue()));
             });
             report = mapper.writeValueAsString(list);
-            System.out.println(report);
         } catch (Exception e) {
             e.printStackTrace();
         }

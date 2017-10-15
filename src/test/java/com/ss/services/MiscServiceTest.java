@@ -29,7 +29,7 @@ public class MiscServiceTest {
     private MiscService miscService;
 
     @Test
-    public void verifyReadAndProcessInput() throws Exception {
+    public void verifyUrlResponseGetsPopulatedWithoutErrorForValidUrl() throws Exception {
         //Given
         String input = "https://google.com\nhttps://yahoo.com";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -43,6 +43,8 @@ public class MiscServiceTest {
         assertEquals(2, miscService.getUrlList().size());
         assertEquals("https://google.com", miscService.getUrlList().get(0).getUrl());
         assertEquals("https://yahoo.com", miscService.getUrlList().get(1).getUrl());
+        assertEquals(null, miscService.getUrlList().get(0).getError());
+        assertEquals(null, miscService.getUrlList().get(1).getError());
     }
 
     @Test
@@ -61,7 +63,7 @@ public class MiscServiceTest {
     }
 
     @Test
-    public void verifyReadAndProcessInputGeneratesUrlResponseStatistics() throws Exception {
+    public void verifyResponseStatistics() throws Exception {
         //Given
         String input = "https://google.com\nhttps://yahoo.com\nabc://test.com";
         System.setIn(new ByteArrayInputStream(input.getBytes()));

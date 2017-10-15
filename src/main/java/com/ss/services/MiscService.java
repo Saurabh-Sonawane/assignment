@@ -19,7 +19,7 @@ public class MiscService {
     public void readAndProcessInput() {
         Scanner scanner = new Scanner(System.in);
         String url = "";
-        System.out.println("Please enter each URL on new line : ");
+        System.out.println("\n\nPlease enter each URL on new line : \n");
         urlList = new ArrayList<>();
         while( scanner.hasNextLine() && (url = scanner.nextLine()) != null && url.length() > 0 ) {
             processUrl(url);
@@ -31,7 +31,10 @@ public class MiscService {
         urlResponse.setUrl(url);
         if(urlValidator.isValid(url)) {
             urlResponse = restClient.fetchUrlContent(url);
-            processUrlStatistics(urlResponse);
+            if(urlResponse.getError() == null )
+            {
+                processUrlStatistics(urlResponse);
+            }
         } else {
             urlResponse.setError("Invalid Url");
         }
